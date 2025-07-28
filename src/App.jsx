@@ -4,6 +4,8 @@ import './App.css'
 function App() {
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [urlImagem, setUrlImagem] = useState('')
+
 
   return (
     <div className="container">
@@ -31,6 +33,17 @@ function App() {
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
             placeholder="Digite a descrição"
+          />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="url">URL da imagem de capa</label>
+          <input
+            id="url"
+            type="text"
+            value={urlImagem}
+            onChange={(e) => setUrlImagem(e.target.value)}
+            placeholder="Cole aqui a URL da imagem"
           />
         </div>
 
