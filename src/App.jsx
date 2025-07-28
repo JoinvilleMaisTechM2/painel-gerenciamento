@@ -6,8 +6,7 @@ function App() {
   const [descricao, setDescricao] = useState('')
   const [urlImagem, setUrlImagem] = useState('')
   const [dataPublicacao, setDataPublicacao] = useState('')
-
-
+  const [categoria, setCategoria] = useState('')
 
   return (
     <div className="container">
@@ -58,6 +57,22 @@ function App() {
             onChange={(e) => setDataPublicacao(e.target.value)}
           />
         </div>
+        
+        <div className="form-control">
+          <label htmlFor="categoria">Tipo do post</label>
+          <select
+            id="categoria"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          >
+            <option value="">Selecione uma categoria</option>
+            <option value="artigo">Artigo</option>
+            <option value="noticia">Notícia</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="entrevista">Entrevista</option>
+          </select>
+        </div>
+
 
       </form>
     </div>

@@ -56,6 +56,19 @@ h1 {
   border-color: #7c3aed;
 }
 
+.form-control select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-control select:focus {
+  outline: none;
+  border-color: #7c3aed;
+}
+
 button {
   background-color: #2563eb;
   color: white;
