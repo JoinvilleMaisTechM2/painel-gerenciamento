@@ -5,6 +5,8 @@ function App() {
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [urlImagem, setUrlImagem] = useState('')
+  const [dataPublicacao, setDataPublicacao] = useState('')
+
 
 
   return (
@@ -43,7 +45,17 @@ function App() {
             type="text"
             value={urlImagem}
             onChange={(e) => setUrlImagem(e.target.value)}
-            placeholder="Cole aqui a URL da imagem"
+            placeholder="URL da imagem da capa"
+          />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="data">Data de publicação</label>
+          <input
+            id="data"
+            type="date"
+            value={dataPublicacao}
+            onChange={(e) => setDataPublicacao(e.target.value)}
           />
         </div>
 
