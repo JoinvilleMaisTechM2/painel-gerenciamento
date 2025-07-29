@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const [titulo, setTitulo] = useState('')
@@ -8,11 +10,49 @@ function App() {
   const [dataPublicacao, setDataPublicacao] = useState('')
   const [categoria, setCategoria] = useState('')
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (!titulo.trim()) {
+      toast.error('O título é obrigatório')
+      return
+    }
+
+    if (!descricao.trim()) {
+      toast.error('A descrição é obrigatória')
+      return
+    }
+
+    if (!urlImagem.startsWith('http')) {
+      toast.error('A URL da imagem deve começar com http')
+      return
+    }
+
+    if (!categoria) {
+      toast.error('Selecione uma categoria')
+      return
+    }
+
+    const hoje = new Date().toISOString().split('T')[0]
+    if (dataPublicacao < hoje) {
+      toast.error('A data deve ser hoje ou no futuro')
+      return
+    }
+
+    toast.success('Post criado com sucesso!')
+
+    setTitulo('')
+    setDescricao('')
+    setUrlImagem('')
+    setDataPublicacao('')
+    setCategoria('')
+  }
+
   return (
     <div className="container">
       <h1>Painel de Gerenciamento</h1>
 
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h3 className="subtitulo">Novo Post</h3>
 
         <div className="form-control">
@@ -73,8 +113,10 @@ function App() {
           </select>
         </div>
 
-
+        <button type="submit">Criar post</button>
       </form>
+
+      <ToastContainer />
     </div>
   )
 }
