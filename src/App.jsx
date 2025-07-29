@@ -13,18 +13,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!titulo.trim()) {
-      toast.error('O título é obrigatório')
-      return
-    }
-
-    if (!descricao.trim()) {
-      toast.error('A descrição é obrigatória')
+    if (!titulo || !descricao) {
+      toast.error('Título e descrição são obrigatórios')
       return
     }
 
     if (!urlImagem.startsWith('http')) {
-      toast.error('A URL da imagem deve começar com http')
+      toast.error('A URL da imagem deve começar com "http"')
       return
     }
 
@@ -33,13 +28,24 @@ function App() {
       return
     }
 
-    const hoje = new Date().toISOString().split('T')[0]
-    if (dataPublicacao < hoje) {
+    if (new Date(dataPublicacao) < new Date().setHours(0, 0, 0, 0)) {
       toast.error('A data deve ser hoje ou no futuro')
       return
     }
 
-    toast.success('Post criado com sucesso!')
+    const novoPost = {
+      titulo,
+      descricao,
+      urlImagem,
+      dataPublicacao,
+      categoria
+    }
+
+    const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
+    postsSalvos.push(novoPost)
+    localStorage.setItem('posts', JSON.stringify(postsSalvos))
+
+    toast.success('Post criado e salvo com sucesso!')
 
     setTitulo('')
     setDescricao('')
@@ -97,7 +103,7 @@ function App() {
             onChange={(e) => setDataPublicacao(e.target.value)}
           />
         </div>
-        
+
         <div className="form-control">
           <label htmlFor="categoria">Tipo do post</label>
           <select
