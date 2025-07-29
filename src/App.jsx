@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -9,6 +9,12 @@ function App() {
   const [urlImagem, setUrlImagem] = useState('')
   const [dataPublicacao, setDataPublicacao] = useState('')
   const [categoria, setCategoria] = useState('')
+  const [totalPosts, setTotalPosts] = useState(0)
+
+  useEffect(() => {
+    const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
+    setTotalPosts(postsSalvos.length)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -28,7 +34,13 @@ function App() {
       return
     }
 
-    if (new Date(dataPublicacao) < new Date().setHours(0, 0, 0, 0)) {
+    const hoje = new Date()
+    hoje.setHours(0, 0, 0, 0)
+
+    const [ano, mes, dia] = dataPublicacao.split('-').map(Number)
+    const dataEscolhida = new Date(ano, mes - 1, dia)
+
+    if (dataEscolhida < hoje) {
       toast.error('A data deve ser hoje ou no futuro')
       return
     }
@@ -44,7 +56,7 @@ function App() {
     const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
     postsSalvos.push(novoPost)
     localStorage.setItem('posts', JSON.stringify(postsSalvos))
-
+    setTotalPosts(postsSalvos.length)
     toast.success('Post criado e salvo com sucesso!')
 
     setTitulo('')
@@ -57,10 +69,10 @@ function App() {
   return (
     <div className="container">
       <h1>Painel de Gerenciamento</h1>
+      <p className="total-posts"><strong>Total de posts:</strong> {totalPosts}</p>
 
       <form className="form" onSubmit={handleSubmit}>
         <h3 className="subtitulo">Novo Post</h3>
-
         <div className="form-control">
           <label htmlFor="title">Título</label>
           <input
@@ -71,7 +83,6 @@ function App() {
             placeholder="Digite o título"
           />
         </div>
-
         <div className="form-control">
           <label htmlFor="description">Descrição</label>
           <input
@@ -82,7 +93,6 @@ function App() {
             placeholder="Digite a descrição"
           />
         </div>
-
         <div className="form-control">
           <label htmlFor="url">URL da imagem de capa</label>
           <input
@@ -93,7 +103,6 @@ function App() {
             placeholder="URL da imagem da capa"
           />
         </div>
-
         <div className="form-control">
           <label htmlFor="data">Data de publicação</label>
           <input
@@ -103,7 +112,6 @@ function App() {
             onChange={(e) => setDataPublicacao(e.target.value)}
           />
         </div>
-
         <div className="form-control">
           <label htmlFor="categoria">Tipo do post</label>
           <select
@@ -118,10 +126,8 @@ function App() {
             <option value="entrevista">Entrevista</option>
           </select>
         </div>
-
         <button type="submit">Criar post</button>
       </form>
-
       <ToastContainer />
     </div>
   )
