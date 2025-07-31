@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./PostsList.css";
+import Post from "./Post";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
@@ -9,27 +10,23 @@ function PostsList() {
     setPosts(postsSalvos);
   }, []);
 
-  let cards = [];
-  for (let i = 0; i < posts.length; i++) {
-    const post = posts[i];
-    cards.push(
-      <div key={i} className="post-card-horizontal">
-        <img src={post.capa || post.urlImagem} alt={post.titulo} />
-        <div className="post-content">
-          <span className="post-tag">{(post.tipo || post.categoria || "").toUpperCase()}</span>
-          <h3 className="post-title">{post.titulo}</h3>
-          <p className="post-desc">{post.descricao}</p>
-          <p className="post-date">Publicado em: {post.data || post.dataPublicacao}</p>
-          <button className="delete-button">Excluir</button>
-        </div>
-      </div>
-    );
-  }
+  const handleDelete = (index) => {
+    const novosPosts = [...posts];
+    novosPosts.splice(index, 1);
+    setPosts(novosPosts);
+    localStorage.setItem("posts", JSON.stringify(novosPosts));
+  };
 
   return (
     <div className="posts-list">
       <h2>Lista de Posts</h2>
-      {cards.length > 0 ? cards : <p>Nenhum post encontrado.</p>}
+      {posts.length > 0 ? (
+        posts.map((post, i) => (
+          <Post key={i} post={post} onDelete={() => handleDelete(i)} />
+        ))
+      ) : (
+        <p>Nenhum post encontrado.</p>
+      )}
     </div>
   );
 }
