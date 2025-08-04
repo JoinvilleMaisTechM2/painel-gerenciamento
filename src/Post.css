@@ -1,14 +1,18 @@
+
 .post-card {
   display: flex;
-  gap: 16px;
-  background-color: white;
+  background-color: #fff;
   border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 24px auto;
+  max-width: 800px;
+  gap: 16px;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
 }
 
-.post-img {
+.post-image {
   width: 180px;
   height: 120px;
   object-fit: cover;
@@ -21,30 +25,40 @@
   flex-direction: column;
 }
 
-.post-categoria {
+.post-category {
   color: #2563eb;
   font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
-.post-data {
+.post-content h2 {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+}
+
+.post-content p {
   font-size: 14px;
-  color: #555;
-  margin-top: 8px;
+  margin: 0 0 8px 0;
+  color: #333;
 }
 
-.excluir-btn {
+.post-date {
+  color: #555;
+}
+
+.delete-button {
   align-self: flex-end;
   background: none;
   border: none;
   color: #2563eb;
   font-weight: bold;
   cursor: pointer;
-  margin-top: auto;
+  margin-top: 12px;
+  padding: 4px 8px;
 }
 
-.excluir-btn:hover {
+.delete-button:hover {
   text-decoration: underline;
 }
