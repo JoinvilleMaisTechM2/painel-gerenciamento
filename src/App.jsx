@@ -19,18 +19,8 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (!titulo || !descricao) {
-      toast.error('Título e descrição são obrigatórios')
-      return
-    }
-
-    if (!urlImagem.startsWith('http')) {
-      toast.error('A URL da imagem deve começar com "http"')
-      return
-    }
-
-    if (!categoria) {
-      toast.error('Selecione uma categoria')
+    if (!titulo || !descricao || !urlImagem || !dataPublicacao || !categoria) {
+      toast.error('Por favor, preencha todos os campos')
       return
     }
 
@@ -56,6 +46,7 @@ function App() {
     const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
     postsSalvos.push(novoPost)
     localStorage.setItem('posts', JSON.stringify(postsSalvos))
+
     setTotalPosts(postsSalvos.length)
     toast.success('Post criado e salvo com sucesso!')
 
@@ -73,45 +64,50 @@ function App() {
 
       <form className="form" onSubmit={handleSubmit}>
         <h3 className="subtitulo">Novo Post</h3>
+
         <div className="form-control">
           <label htmlFor="title">Título</label>
           <input
-            id="title"
             type="text"
+            id="title"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             placeholder="Digite o título"
           />
         </div>
+
         <div className="form-control">
           <label htmlFor="description">Descrição</label>
           <input
-            id="description"
             type="text"
+            id="description"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
             placeholder="Digite a descrição"
           />
         </div>
+
         <div className="form-control">
           <label htmlFor="url">URL da imagem de capa</label>
           <input
-            id="url"
             type="text"
+            id="url"
             value={urlImagem}
             onChange={(e) => setUrlImagem(e.target.value)}
             placeholder="URL da imagem da capa"
           />
         </div>
+
         <div className="form-control">
           <label htmlFor="data">Data de publicação</label>
           <input
-            id="data"
             type="date"
+            id="data"
             value={dataPublicacao}
             onChange={(e) => setDataPublicacao(e.target.value)}
           />
         </div>
+
         <div className="form-control">
           <label htmlFor="categoria">Tipo do post</label>
           <select
@@ -119,15 +115,16 @@ function App() {
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
           >
-            <option value="">Selecione uma categoria</option>
-            <option value="artigo">Artigo</option>
+            <option value="">Selecione</option>
             <option value="noticia">Notícia</option>
-            <option value="tutorial">Tutorial</option>
+            <option value="artigo">Artigo</option>
             <option value="entrevista">Entrevista</option>
           </select>
         </div>
+
         <button type="submit">Criar post</button>
       </form>
+
       <ToastContainer />
     </div>
   )
