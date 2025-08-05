@@ -63,7 +63,7 @@ function App() {
       <p className="total-posts"><strong>Total de posts:</strong> {totalPosts}</p>
 
       <form className="form" onSubmit={handleSubmit}>
-        <h3 className="subtitulo">Novo Post</h3>
+        <h3 className="subtitulo">NOVO POST</h3>
 
         <div className="form-control">
           <label htmlFor="title">Título</label>
@@ -122,7 +122,10 @@ function App() {
           </select>
         </div>
 
-        <button type="submit">Criar post</button>
+        <div style={{ textAlign: 'center' }}>
+          <button type="submit">Criar post</button>
+        </div>
+
       </form>
 
       <ToastContainer />

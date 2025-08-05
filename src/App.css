@@ -4,16 +4,46 @@
   margin-bottom: 24px;
 }
 
+.container h1 {
+  text-align: center;
+  font-size: 32px;
+  color: #122871;
+  margin-bottom: 24px;
+}
+
+.titulo-lista {
+  position: relative;
+  margin-top: 40px;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #122871;
+  border-top: 1px dotted rgba(128, 128, 128, 0.5); 
+}
+
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  color: #122871;
+}
+
+.subtitulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-left: 16px;
 }
 
 .form-control {
   display: flex;
   flex-direction: column;
+  padding-left: 30px;
+  padding-right: 30px;
 }
+
+
 
 .form-control label {
   font-weight: bold;
@@ -35,8 +65,10 @@
   border-color: #7c3aed;
 }
 
+
 button {
-  background-color: #2563eb;
+  background-color: #122871;
+  width: 240px;
   color: white;
   font-weight: bold;
   border: none;
