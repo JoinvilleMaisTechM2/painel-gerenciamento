@@ -9,9 +9,8 @@ function PostsList() {
     setPosts(postsSalvos);
   }, []);
 
-  const handleDelete = (index) => {
-    const novosPosts = [...posts];
-    novosPosts.splice(index, 1);
+  const handleDelete = (id) => {
+    const novosPosts = posts.filter((post) => post.id !== id);
     setPosts(novosPosts);
     localStorage.setItem("posts", JSON.stringify(novosPosts));
   };
@@ -21,8 +20,12 @@ function PostsList() {
       <h2 className="titulo-lista">Lista de Posts</h2>
 
       {posts.length > 0 ? (
-        posts.map((post, index) => (
-          <Post key={index} post={post} onDelete={() => handleDelete(index)} />
+        posts.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            onDelete={() => handleDelete(post.id)}
+          />
         ))
       ) : (
         <p>Nenhum post encontrado.</p>

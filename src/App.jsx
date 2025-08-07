@@ -36,6 +36,7 @@ function App() {
     }
 
     const novoPost = {
+      id: Date.now(),
       titulo,
       descricao,
       urlImagem,
