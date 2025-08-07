@@ -1,7 +1,13 @@
 .total-posts {
   text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.contagem-categorias {
+  text-align: center;
   font-size: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 34px;
 }
 
 .container h1 {

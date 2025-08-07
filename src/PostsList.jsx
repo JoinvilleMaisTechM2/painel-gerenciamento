@@ -7,12 +7,24 @@ function PostsList() {
   useEffect(() => {
     const postsSalvos = JSON.parse(localStorage.getItem("posts")) || [];
     setPosts(postsSalvos);
+    contarCategorias(postsSalvos);
   }, []);
+
+  const contarCategorias = (lista) => {
+    const contagem = {};
+    lista.forEach((post) => {
+      const cat = post.categoria?.toLowerCase();
+      if (cat) {
+        contagem[cat] = (contagem[cat] || 0) + 1;
+      }
+    });
+  };
 
   const handleDelete = (id) => {
     const novosPosts = posts.filter((post) => post.id !== id);
     setPosts(novosPosts);
     localStorage.setItem("posts", JSON.stringify(novosPosts));
+    contarCategorias(novosPosts);
   };
 
   return (

@@ -10,11 +10,24 @@ function App() {
   const [dataPublicacao, setDataPublicacao] = useState('')
   const [categoria, setCategoria] = useState('')
   const [totalPosts, setTotalPosts] = useState(0)
+  const [contagemPorCategoria, setContagemPorCategoria] = useState({})
 
   useEffect(() => {
     const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
     setTotalPosts(postsSalvos.length)
+    contarCategorias(postsSalvos)
   }, [])
+
+  const contarCategorias = (lista) => {
+    const contagem = {}
+    lista.forEach((post) => {
+      const cat = post.categoria?.toLowerCase()
+      if (cat) {
+        contagem[cat] = (contagem[cat] || 0) + 1
+      }
+    })
+    setContagemPorCategoria(contagem)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -45,10 +58,11 @@ function App() {
     }
 
     const postsSalvos = JSON.parse(localStorage.getItem('posts')) || []
-    postsSalvos.push(novoPost)
-    localStorage.setItem('posts', JSON.stringify(postsSalvos))
+    const novosPosts = [...postsSalvos, novoPost]
+    localStorage.setItem('posts', JSON.stringify(novosPosts))
 
-    setTotalPosts(postsSalvos.length)
+    setTotalPosts(novosPosts.length)
+    contarCategorias(novosPosts)
     toast.success('Post criado e salvo com sucesso!')
 
     setTitulo('')
@@ -62,6 +76,14 @@ function App() {
     <div className="container">
       <h1>Painel de Gerenciamento</h1>
       <p className="total-posts"><strong>Total de posts:</strong> {totalPosts}</p>
+
+      <div className="contagem-categorias" id="contagem-categorias">
+        {Object.entries(contagemPorCategoria).map(([cat, qtd]) => (
+          <p key={cat}>
+            <strong>{cat.charAt(0).toUpperCase() + cat.slice(1)}:</strong> {qtd}
+          </p>
+        ))}
+      </div>
 
       <form className="form" onSubmit={handleSubmit}>
         <h3 className="subtitulo">NOVO POST</h3>
@@ -126,7 +148,6 @@ function App() {
         <div style={{ textAlign: 'center' }}>
           <button type="submit">Criar post</button>
         </div>
-
       </form>
 
       <ToastContainer />
